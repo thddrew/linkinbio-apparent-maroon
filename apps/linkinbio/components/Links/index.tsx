@@ -24,6 +24,7 @@ import {
   DrawerHandle,
 } from "@/components/ui/drawer";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { displayLocalePrice } from "@/lib/currency";
 
 const theme = appTheme as ThemeConfig;
 
@@ -274,7 +275,7 @@ const MediumLinkCardPreview = ({
                 theme?.links?.[size]?.preview?.font?.body?.className
               )}
             >
-              {price} {currency}
+              {displayLocalePrice(price, currency)}
             </p>
           )}
           {buttonPosition === "inline" && CTAButton}
@@ -335,11 +336,7 @@ const MediumLinkCard = ({
         )}
       >
         <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-        {price && (
-          <p>
-            {price} {currency}
-          </p>
-        )}
+        {price && <p>{displayLocalePrice(price, currency)}</p>}
         <p
           className={cn(
             theme?.links?.font?.body?.className,
