@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       {
         hostname: "cdn.simpleicons.org",
       },
+      {
+        hostname: "polar-public-sandbox-files.s3.amazonaws.com",
+      },
+      {
+        hostname: "polar-public-files.s3.amazonaws.com",
+      },
     ],
   },
   rewrites: async () => [
