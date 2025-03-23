@@ -58,20 +58,18 @@ const Thumbnail = ({
 
   if (image) {
     return (
-      <div>
-        <Image
-          src={image}
-          alt={alt}
-          width={imageSize.width}
-          height={imageSize.height}
-          sizes="100vw"
-          className={cn(
-            "aspect-square",
-            theme?.links?.thumbnailImage?.className,
-            theme?.links?.[size]?.thumbnailImage?.className
-          )}
-        />
-      </div>
+      <Image
+        src={image}
+        alt={alt}
+        width={imageSize.width}
+        height={imageSize.height}
+        sizes="100vw"
+        className={cn(
+          "aspect-square",
+          theme?.links?.thumbnailImage?.className,
+          theme?.links?.[size]?.thumbnailImage?.className
+        )}
+      />
     );
   }
 
@@ -104,20 +102,18 @@ const MediumCardImages = ({
 }) => {
   if (image) {
     return (
-      <div>
-        <Image
-          src={image}
-          alt={alt}
-          width={0}
-          height={0}
-          sizes="100vw"
-          draggable={false}
-          className={cn(
-            "w-full h-[250px] object-contain",
-            theme?.links.md.cardImage?.className
-          )}
-        />
-      </div>
+      <Image
+        src={image}
+        alt={alt}
+        width={0}
+        height={0}
+        sizes="100vw"
+        draggable={false}
+        className={cn(
+          "w-full h-[250px] object-contain",
+          theme?.links.md.cardImage?.className
+        )}
+      />
     );
   }
 
