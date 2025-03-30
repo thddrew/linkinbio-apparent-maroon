@@ -28,6 +28,21 @@ import { displayLocalePrice } from "@/lib/currency";
 
 const theme = appTheme as ThemeConfig;
 
+const getPreviewImageSize = (size: "md", appTheme: ThemeConfig) => {
+  const imageSize = {
+    width:
+      appTheme?.links?.[size]?.preview?.thumbnailImage?.width ??
+      appTheme?.links?.thumbnailImage?.width ??
+      undefined,
+    height:
+      appTheme?.links?.[size]?.preview?.thumbnailImage?.height ??
+      appTheme?.links?.thumbnailImage?.height ??
+      undefined,
+  };
+
+  return imageSize;
+};
+
 const getImageSize = (size: "sm" | "md", appTheme: ThemeConfig) => {
   const imageSize = {
     width:
@@ -48,13 +63,23 @@ const Thumbnail = ({
   alt,
   emoji,
   size = "sm",
+  isPreview = false,
 }: {
   image?: string;
   alt: string;
   emoji?: string;
   size?: "sm" | "md";
+  isPreview?: boolean;
 }) => {
-  const imageSize = getImageSize(size, theme);
+  const imageSize =
+    isPreview && size === "md"
+      ? getPreviewImageSize(size, theme)
+      : getImageSize(size, theme);
+
+  const themeClassnames =
+    isPreview && size === "md"
+      ? theme?.links?.[size]?.preview?.thumbnailImage?.className
+      : theme?.links?.[size]?.thumbnailImage?.className;
 
   if (image) {
     return (
@@ -67,7 +92,7 @@ const Thumbnail = ({
         className={cn(
           "aspect-square",
           theme?.links?.thumbnailImage?.className,
-          theme?.links?.[size]?.thumbnailImage?.className
+          themeClassnames
         )}
       />
     );
@@ -87,7 +112,15 @@ const Thumbnail = ({
     );
   }
 
-  return null;
+  return (
+    <Image
+      src={"/images/linkinbio/linkinbio-logo.png"}
+      alt={"Linkinbio-placeholder"}
+      width={imageSize.width}
+      height={imageSize.height}
+      className={cn("text-muted-foreground bg-card", themeClassnames)}
+    />
+  );
 };
 
 const MediumCardImages = ({
@@ -224,26 +257,13 @@ const MediumLinkCardPreview = ({
           theme?.links?.[size]?.preview?.content?.className
         )}
       >
-        {thumbnailImage || thumbnailEmoji ? (
-          <Thumbnail
-            image={thumbnailImage}
-            emoji={thumbnailEmoji}
-            alt={title}
-            size={size}
-          />
-        ) : (
-          <Image
-            src={"/images/linkinbio/linkinbio-logo.png"}
-            alt={"Linkinbio-placeholder"}
-            width={imageSize.width}
-            height={imageSize.height}
-            className={cn(
-              "text-muted-foreground bg-card",
-              theme?.links?.thumbnailImage?.className,
-              theme?.links?.[size]?.thumbnailImage?.className
-            )}
-          />
-        )}
+        <Thumbnail
+          isPreview
+          image={thumbnailImage}
+          emoji={thumbnailEmoji}
+          alt={title}
+          size={size}
+        />
         <div className="flex-1 flex flex-col gap-2">
           <p
             className={cn(
