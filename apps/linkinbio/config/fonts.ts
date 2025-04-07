@@ -1,20 +1,19 @@
-import {
-  Playfair_Display as HeaderFont,
-  Geist as BodyFont,
-  Geist_Mono as ButtonFont,
-} from "next/font/google";
+import { DM_Serif_Display, DM_Sans } from "next/font/google";
 
-export const HeaderFontFamily = HeaderFont({
+export const HeaderFontFamily = DM_Serif_Display({
   variable: "--font-header",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
-export const BodyFontFamily = BodyFont({
+export const BodyFontFamily = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
-export const ButtonFontFamily = ButtonFont({
+export const ButtonFontFamily = DM_Sans({
   variable: "--font-button",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
