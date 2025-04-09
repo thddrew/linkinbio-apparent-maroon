@@ -220,7 +220,7 @@ const MediumLinkCardPreview = ({
       <CardContent
         className={cn(
           "md-card-preview-content",
-          "p-0 w-full relative flex flex-wrap items-start gap-4 text-inherit",
+          "p-0 w-full relative grid grid-cols-[1fr_2fr] gap-4 text-inherit",
           theme?.links?.content?.className,
           theme?.links?.[size]?.content?.className,
           theme?.links?.[size]?.preview?.content?.className
