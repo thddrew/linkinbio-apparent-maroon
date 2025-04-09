@@ -13,7 +13,6 @@ import {
   SmallCardProps,
   ThemeConfig,
 } from "./types";
-import Image from "next/image";
 import appTheme from "@/config/theme";
 import { useState } from "react";
 import {
@@ -27,21 +26,6 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { displayLocalePrice } from "@/lib/currency";
 
 const theme = appTheme as ThemeConfig;
-
-const getPreviewImageSize = (size: "md", appTheme: ThemeConfig) => {
-  const imageSize = {
-    width:
-      appTheme?.links?.[size]?.preview?.thumbnailImage?.width ??
-      appTheme?.links?.thumbnailImage?.width ??
-      undefined,
-    height:
-      appTheme?.links?.[size]?.preview?.thumbnailImage?.height ??
-      appTheme?.links?.thumbnailImage?.height ??
-      undefined,
-  };
-
-  return imageSize;
-};
 
 const getImageSize = (size: "sm" | "md", appTheme: ThemeConfig) => {
   const imageSize = {
@@ -58,18 +42,35 @@ const getImageSize = (size: "sm" | "md", appTheme: ThemeConfig) => {
   return imageSize;
 };
 
+const getPreviewImageSize = (size: "md", appTheme: ThemeConfig) => {
+  const imageSize = {
+    width:
+      appTheme?.links?.[size]?.preview?.thumbnailImage?.width ??
+      appTheme?.links?.thumbnailImage?.width ??
+      undefined,
+    height:
+      appTheme?.links?.[size]?.preview?.thumbnailImage?.height ??
+      appTheme?.links?.thumbnailImage?.height ??
+      undefined,
+  };
+
+  return imageSize;
+};
+
 const Thumbnail = ({
   image,
   alt,
   emoji,
   size = "sm",
   isPreview = false,
+  className,
 }: {
   image?: string;
   alt: string;
   emoji?: string;
   size?: "sm" | "md";
   isPreview?: boolean;
+  className?: string;
 }) => {
   const imageSize =
     isPreview && size === "md"
@@ -83,16 +84,18 @@ const Thumbnail = ({
 
   if (image) {
     return (
-      <Image
+      <img
         src={image}
         alt={alt}
         width={imageSize.width}
         height={imageSize.height}
         sizes="100vw"
         className={cn(
+          `${size}-card-thumbnailImage`,
           "aspect-square",
           theme?.links?.thumbnailImage?.className,
-          themeClassnames
+          themeClassnames,
+          className
         )}
       />
     );
@@ -102,9 +105,11 @@ const Thumbnail = ({
     return (
       <span
         className={cn(
+          `${size}-card-thumbnailEmoji`,
           "size-10 text-3xl content-center aspect-square",
           theme?.links?.thumbnailEmoji?.className,
-          theme?.links?.[size]?.thumbnailEmoji?.className
+          theme?.links?.[size]?.thumbnailEmoji?.className,
+          className
         )}
       >
         {emoji}
@@ -113,57 +118,20 @@ const Thumbnail = ({
   }
 
   return (
-    <Image
+    <img
       src={"/images/linkinbio/linkinbio-logo.png"}
       alt={"Linkinbio-placeholder"}
       width={imageSize.width}
       height={imageSize.height}
-      className={cn("text-muted-foreground bg-card", themeClassnames)}
+      className={cn(
+        `${size}-card-thumbnailImage`,
+        "text-muted-foreground bg-card",
+        theme.links.thumbnailImage.className,
+        themeClassnames,
+        className
+      )}
     />
   );
-};
-
-const MediumCardImages = ({
-  image,
-  alt,
-  emoji,
-}: {
-  image?: string;
-  alt: string;
-  emoji?: string;
-  size?: "md";
-}) => {
-  if (image) {
-    return (
-      <Image
-        src={image}
-        alt={alt}
-        width={0}
-        height={0}
-        sizes="100vw"
-        draggable={false}
-        className={cn(
-          "w-full h-[250px] object-contain",
-          theme?.links.md.cardImage?.className
-        )}
-      />
-    );
-  }
-
-  if (emoji) {
-    return (
-      <span
-        className={cn(
-          "size-10 text-3xl content-center aspect-square",
-          theme?.links.md.cardEmoji?.className
-        )}
-      >
-        {emoji}
-      </span>
-    );
-  }
-
-  return null;
 };
 
 const SmallLinkCard = ({
@@ -181,6 +149,7 @@ const SmallLinkCard = ({
     >
       <Card
         className={cn(
+          "sm-card-background",
           "p-2 min-h-14 rounded-full h-auto w-full relative text-center flex items-center gap-4 text-inherit",
           theme?.links?.background?.className,
           theme?.links?.[size]?.background?.className
@@ -236,12 +205,11 @@ const MediumLinkCardPreview = ({
     </a>
   );
 
-  const imageSize = getImageSize(size, theme);
-
   return (
     <Card
       role="button"
       className={cn(
+        "md-card-preview-background",
         "p-3 w-full",
         theme?.links?.background?.className,
         theme?.links?.[size]?.background?.className,
@@ -251,6 +219,7 @@ const MediumLinkCardPreview = ({
     >
       <CardContent
         className={cn(
+          "md-card-preview-content",
           "p-0 w-full relative flex flex-wrap items-start gap-4 text-inherit",
           theme?.links?.content?.className,
           theme?.links?.[size]?.content?.className,
@@ -267,6 +236,7 @@ const MediumLinkCardPreview = ({
         <div className="flex-1 flex flex-col gap-2">
           <p
             className={cn(
+              "md-card-preview-header",
               theme?.links?.font?.header?.className,
               theme?.links?.[size]?.font?.header?.className,
               theme?.links?.[size]?.preview?.font?.header?.className
@@ -276,6 +246,7 @@ const MediumLinkCardPreview = ({
           </p>
           <p
             className={cn(
+              "md-card-preview-body",
               "line-clamp-2 text-ellipsis",
               theme?.links?.font?.body?.className,
               theme?.links?.[size]?.font?.body?.className,
@@ -287,6 +258,7 @@ const MediumLinkCardPreview = ({
           {price && (
             <p
               className={cn(
+                "md-card-preview-body",
                 theme?.links?.font?.body?.className,
                 theme?.links?.[size]?.preview?.font?.body?.className
               )}
@@ -321,6 +293,7 @@ const MediumLinkCard = ({
     <Button
       variant="outline"
       className={cn(
+        "md-card-button",
         "w-full whitespace-normal h-auto",
         theme?.font.button.className,
         theme?.links?.button?.className,
@@ -334,18 +307,22 @@ const MediumLinkCard = ({
   return (
     <Card
       className={cn(
+        "md-card-background",
         "w-full h-[70dvh] min-h-[350px] flex flex-col",
         theme?.links?.background?.className,
         theme?.links?.[size]?.background?.className
       )}
     >
-      <MediumCardImages
+      <Thumbnail
+        size={size}
         image={thumbnailImage}
         emoji={thumbnailEmoji}
         alt={title}
+        className="w-full h-[250px] object-cover"
       />
       <CardContent
         className={cn(
+          "md-card-content",
           "mt-8 flex-1 h-full w-full relative flex flex-col items-start gap-4 text-inherit",
           theme?.links?.content?.className,
           theme?.links?.[size]?.content?.className
@@ -355,6 +332,7 @@ const MediumLinkCard = ({
         {price && <p>{displayLocalePrice(price, currency)}</p>}
         <p
           className={cn(
+            "md-card-body",
             theme?.links?.font?.body?.className,
             theme?.links?.[size]?.font?.body?.className
           )}
@@ -406,6 +384,7 @@ const MediumLinkCardWrapper = (props: MediumCardProps) => {
       </DrawerTrigger>
       <DrawerContent
         className={cn(
+          "md-card-background",
           "absolute max-h-[80%]",
           theme?.links?.background?.className,
           theme?.links?.[props.size]?.background?.className
