@@ -386,6 +386,7 @@ const MediumLinkCardWrapper = (props: MediumCardProps) => {
         className={cn(
           "md-card-background",
           "absolute max-h-[80%]",
+          theme?.container?.className,
           theme?.links?.background?.className,
           theme?.links?.[props.size]?.background?.className
         )}
