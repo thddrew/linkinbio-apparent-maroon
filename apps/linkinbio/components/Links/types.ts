@@ -7,6 +7,7 @@ type BaseCardProps = {
   title: string;
   newTab?: boolean;
   priority?: boolean;
+  order?: number;
 };
 
 // Small card specific props
