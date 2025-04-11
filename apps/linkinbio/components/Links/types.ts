@@ -85,6 +85,10 @@ export type LinkCardTheme = {
 };
 
 export type ThemeConfig = {
+  colors: {
+    primary: string;
+    secondary: string;
+  };
   container: {
     className: string;
   };

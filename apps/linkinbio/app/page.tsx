@@ -25,6 +25,13 @@ export default async function Home() {
     return 0;
   });
 
+  const sortedSocials = (socials as SocialProps[]).sort((a, b) => {
+    if (a.order && b.order) {
+      return a.order - b.order;
+    }
+    return 0;
+  });
+
   return (
     <Container {...(container as ContainerProps)}>
       <Profile {...(bio as ProfileProps)} />
@@ -32,7 +39,7 @@ export default async function Home() {
         id="socials"
         className="flex gap-4 mx-auto justify-center"
       >
-        {(socials as SocialProps[]).map((social) => (
+        {sortedSocials.map((social) => (
           <Social
             key={`${social.url}-${social.brand}`}
             {...social}
