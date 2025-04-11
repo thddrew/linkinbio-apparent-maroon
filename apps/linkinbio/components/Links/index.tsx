@@ -169,6 +169,7 @@ const SmallLinkCard = ({
 
 const MediumLinkCardPreview = ({
   url,
+  polarCheckoutLink,
   title,
   thumbnailImage,
   thumbnailEmoji,
@@ -182,28 +183,40 @@ const MediumLinkCardPreview = ({
   buttonPosition = "inline",
 }: MediumCardProps) => {
   const CTAButton = (
+    <Button
+      variant="outline"
+      className={cn(
+        "w-full whitespace-normal h-auto",
+        theme?.font.button.className,
+        theme?.links?.button?.className,
+        theme?.links?.[size]?.button?.className,
+        theme?.links?.[size]?.preview?.button?.className
+      )}
+    >
+      {buttonText}
+    </Button>
+  );
+
+  const CTALink = polarCheckoutLink ? (
     <a
       className="mt-auto w-full"
-      href={url}
-      target={newTab ? "_blank" : "_self"}
+      href={polarCheckoutLink}
+      data-polar-checkout
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      <Button
-        variant="outline"
-        className={cn(
-          "w-full whitespace-normal h-auto",
-          theme?.font.button.className,
-          theme?.links?.button?.className,
-          theme?.links?.[size]?.button?.className,
-          theme?.links?.[size]?.preview?.button?.className
-        )}
-      >
-        {buttonText}
-      </Button>
+      {CTAButton}
     </a>
-  );
+  ) : url ? (
+    <a
+      className="mt-auto w-full"
+      href={url}
+      target={newTab ? "_blank" : "_self"}
+    >
+      {CTAButton}
+    </a>
+  ) : null;
 
   return (
     <Card
@@ -266,10 +279,10 @@ const MediumLinkCardPreview = ({
               {displayLocalePrice(price, currency)}
             </p>
           )}
-          {buttonPosition === "inline" && CTAButton}
+          {buttonPosition === "inline" && CTALink}
         </div>
       </CardContent>
-      {buttonPosition === "end" && CTAButton}
+      {buttonPosition === "end" && CTALink}
     </Card>
   );
 };
