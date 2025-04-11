@@ -1,6 +1,6 @@
 export default {
   "container": {
-    "className": "bg-[#171918] text-white"
+    "className": "max-w-md mx-auto bg-[#171918] text-white"
   },
   "profile": {
     "avatar": {
