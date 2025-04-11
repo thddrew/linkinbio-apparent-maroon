@@ -39,11 +39,10 @@ export default function RootLayout({
         </ThemeProvider>
         <SpeedInsights />
         <Analytics />
-        <script
+        <Script
           src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.1/dist/embed.global.js"
-          defer
-          data-auto-init
-        ></script>
+          strategy="beforeInteractive"
+        ></Script>
         {process.env.ANALYTICS_ID && (
           <Script
             defer
