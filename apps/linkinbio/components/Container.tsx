@@ -23,7 +23,7 @@ export const Container = async ({
         theme?.container?.className
       )}
     >
-      <main className="max-w-md min-h-full mx-auto flex flex-col gap-8 relative z-10">
+      <main className="w-full max-w-md min-h-full mx-auto flex flex-col gap-8 relative z-10">
         {children}
       </main>
       {backgroundImage && (
