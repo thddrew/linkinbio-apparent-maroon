@@ -18,7 +18,7 @@ export type SocialProps = {
   darkColor?: string;
 };
 
-export const Social = ({ url, brand }: SocialProps) => {
+export const Social = async ({ url, brand }: SocialProps) => {
   return (
     <a
       href={url}

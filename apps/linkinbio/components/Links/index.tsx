@@ -14,7 +14,7 @@ import {
   ThemeConfig,
 } from "./types";
 import appTheme from "@/config/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -167,6 +167,42 @@ const SmallLinkCard = ({
   );
 };
 
+const PolarCheckoutLink = ({
+  checkoutLink,
+  children,
+  className,
+}: {
+  checkoutLink: string;
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  useEffect(() => {
+    if (window && "Polar" in window) {
+      console.log("Initializing Polar Embed Checkout", checkoutLink);
+      (
+        window.Polar as {
+          EmbedCheckout: {
+            init: () => void;
+          };
+        }
+      ).EmbedCheckout.init();
+    }
+  }, []);
+
+  return (
+    <a
+      href={checkoutLink}
+      data-polar-checkout
+      className={cn(className)}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      {children}
+    </a>
+  );
+};
+
 const MediumLinkCardPreview = ({
   url,
   polarCheckoutLink,
@@ -198,16 +234,12 @@ const MediumLinkCardPreview = ({
   );
 
   const CTALink = polarCheckoutLink ? (
-    <a
+    <PolarCheckoutLink
+      checkoutLink={polarCheckoutLink}
       className="mt-auto w-full"
-      href={polarCheckoutLink}
-      data-polar-checkout
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
     >
       {CTAButton}
-    </a>
+    </PolarCheckoutLink>
   ) : url ? (
     <a
       className="mt-auto w-full"
@@ -353,13 +385,12 @@ const MediumLinkCard = ({
           {description}
         </p>
         {polarCheckoutLink && !url ? (
-          <a
+          <PolarCheckoutLink
+            checkoutLink={polarCheckoutLink}
             className="contents"
-            data-polar-checkout
-            href={polarCheckoutLink}
           >
             {CheckoutButton}
-          </a>
+          </PolarCheckoutLink>
         ) : (
           <a
             className="contents"
