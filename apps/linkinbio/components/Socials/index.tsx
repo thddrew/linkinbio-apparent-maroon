@@ -16,6 +16,7 @@ export type SocialProps = {
   brand: string;
   color?: string;
   darkColor?: string;
+  order?: number;
 };
 
 export const Social = async ({ url, brand }: SocialProps) => {

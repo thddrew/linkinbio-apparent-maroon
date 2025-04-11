@@ -368,41 +368,58 @@ const MediumLinkCard = ({
       <CardContent
         className={cn(
           "md-card-content",
-          "mt-8 flex-1 h-full w-full relative flex flex-col items-start gap-4 text-inherit",
+          "px-0 mt-8 w-full relative flex-1 flex flex-col items-start text-inherit overflow-auto pb-0",
           theme?.links?.content?.className,
           theme?.links?.[size]?.content?.className
         )}
       >
-        <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-        {price && <p>{displayLocalePrice(price, currency)}</p>}
-        <p
+        <div className="space-y-4">
+          <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+          {price && <p>{displayLocalePrice(price, currency)}</p>}
+          <p
+            className={cn(
+              "md-card-body",
+              "text-balance",
+              theme?.links?.font?.body?.className,
+              theme?.links?.[size]?.font?.body?.className
+            )}
+          >
+            {description}
+          </p>
+        </div>
+        <div
+          aria-hidden
           className={cn(
-            "md-card-body",
-            theme?.links?.font?.body?.className,
-            theme?.links?.[size]?.font?.body?.className
+            "bg-linear-to-b h-[300px] min-h-[300px] max-h-[300px] -mt-[250px] sticky w-full bottom-17 inset-0 z-10 from-transparent from-80% select-none pointer-events-none",
+            `to-[${theme?.colors.primary}]`
+          )}
+        />
+        <div
+          className={cn(
+            "sticky bottom-0 pb-8 w-full z-20",
+            theme?.container?.className
           )}
         >
-          {description}
-        </p>
-        {polarCheckoutLink && !url ? (
-          <PolarCheckoutLink
-            checkoutLink={polarCheckoutLink}
-            className="contents"
-          >
-            {CheckoutButton}
-          </PolarCheckoutLink>
-        ) : (
-          <a
-            className="contents"
-            href={url}
-            target={newTab ? "_blank" : "_self"}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            {CheckoutButton}
-          </a>
-        )}
+          {polarCheckoutLink && !url ? (
+            <PolarCheckoutLink
+              checkoutLink={polarCheckoutLink}
+              className="contents"
+            >
+              {CheckoutButton}
+            </PolarCheckoutLink>
+          ) : (
+            <a
+              className="contents"
+              href={url}
+              target={newTab ? "_blank" : "_self"}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {CheckoutButton}
+            </a>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
