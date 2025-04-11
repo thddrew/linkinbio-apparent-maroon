@@ -11,6 +11,7 @@ import bio from "@/config/bio.json";
 import container from "@/config/container.json";
 import type { CardProps } from "@/components/Links/types";
 import type { ContainerProps } from "@/components/Container";
+import { Suspense } from "react";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return metadata;
@@ -43,10 +44,9 @@ export default async function Home() {
         className="flex flex-col gap-4"
       >
         {sortedCards.map((link) => (
-          <Link
-            key={`${link.url}-${link.title}`}
-            {...link}
-          />
+          <Suspense key={`${link.url}-${link.title}`}>
+            <Link {...link} />
+          </Suspense>
         ))}
       </section>
       <section className="mt-auto text-center text-xs">
