@@ -17,6 +17,13 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Home() {
+  const sortedCards = (links as CardProps[]).sort((a, b) => {
+    if (a.order && b.order) {
+      return a.order - b.order;
+    }
+    return 0;
+  });
+
   return (
     <Container {...(container as ContainerProps)}>
       <Profile {...(bio as ProfileProps)} />
@@ -35,7 +42,7 @@ export default async function Home() {
         id="links"
         className="flex flex-col gap-4"
       >
-        {(links as CardProps[]).map((link) => (
+        {sortedCards.map((link) => (
           <Link
             key={`${link.url}-${link.title}`}
             {...link}
