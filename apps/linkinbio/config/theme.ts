@@ -1,4 +1,8 @@
 export default {
+  "colors": {
+    "primary": "#171918",
+    "secondary": "white"
+  },
   "container": {
     "className": "bg-[#171918] text-white"
   },
