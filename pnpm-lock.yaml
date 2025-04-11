@@ -358,7 +358,7 @@ importers:
         specifier: ^10.9.1
         version: 10.9.2(@types/node@22.13.10)(typescript@5.8.2)
       typescript:
-        specifier: ^5.5.3
+        specifier: ^5
         version: 5.8.2
 
   apps/linkinbio:

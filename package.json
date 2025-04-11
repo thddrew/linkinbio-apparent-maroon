@@ -7,7 +7,7 @@
     "dev": "turbo run dev",
     "dev:analytics": "turbo run dev --filter=analytics",
     "dev:linkinbio": "turbo run dev --filter=linkinbio-studio",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint --filter=linkinbio-studio"
   },
   "devDependencies": {
     "turbo": "latest"
