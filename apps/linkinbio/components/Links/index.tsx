@@ -353,7 +353,7 @@ const MediumLinkCard = ({
     <Card
       className={cn(
         "md-card-background",
-        "w-full h-[70dvh] min-h-[350px] flex flex-col",
+        "w-full min-h-[350px] flex flex-col",
         theme?.links?.background?.className,
         theme?.links?.[size]?.background?.className
       )}
@@ -431,6 +431,8 @@ const MediumLinkCardWrapper = (props: MediumCardProps) => {
     <Drawer
       open={isPreviewOpen}
       onOpenChange={setIsPreviewOpen}
+      modal={false}
+      handleOnly
     >
       <DrawerTrigger asChild>
         <MediumLinkCardPreview
@@ -444,9 +446,18 @@ const MediumLinkCardWrapper = (props: MediumCardProps) => {
         />
       </DrawerTrigger>
       <DrawerContent
+        overlay={
+          <div
+            onClick={() => setIsPreviewOpen(false)}
+            className={cn(
+              "absolute inset-0 bg-black/70 z-10",
+              isPreviewOpen ? "animate-in fade-in-0 duration-300" : "opacity-0"
+            )}
+          />
+        }
         className={cn(
           "md-card-background",
-          "absolute max-h-[80%]",
+          "max-h-[98svh]",
           theme?.container?.className,
           theme?.links?.background?.className,
           theme?.links?.[props.size]?.background?.className
